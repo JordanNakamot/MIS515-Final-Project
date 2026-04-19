@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NBA Game Predictor</title>
+</head>
+<body>
+    <h1>NBA Game Predictor</h1>
+    <p>Enter team stats to predict the winner.</p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <p>Home Team: <input type="text" name="home_team" required></p>
+        <p>Away Team: <input type="text" name="away_team" required></p>
+
+        <p>Home Win %: <input type="number" step="0.01" name="home_win_pct" required></p>
+        <p>Away Win %: <input type="number" step="0.01" name="away_win_pct" required></p>
+
+        <p>Home Avg Points Scored: <input type="number" step="0.1" name="home_avg_points" required></p>
+        <p>Away Avg Points Scored: <input type="number" step="0.1" name="away_avg_points" required></p>
+
+        <p>Home Avg Points Allowed: <input type="number" step="0.1" name="home_avg_allowed" required></p>
+        <p>Away Avg Points Allowed: <input type="number" step="0.1" name="away_avg_allowed" required></p>
+
+        <button type="submit">Predict Winner</button>
+    </form>
+
+    {% if winner %}
+        <h2>Prediction Result</h2>
+
+        <table border="1">
+            <tr>
+                <th>Team</th>
+                <th>Model Score</th>
+                <th>Win Probability</th>
+            </tr>
+            <tr>
+                <td>{{ home_team }}</td>
+                <td>{{ home_score }}</td>
+                <td>{{ home_prob }}%</td>
+            </tr>
+            <tr>
+                <td>{{ away_team }}</td>
+                <td>{{ away_score }}</td>
+                <td>{{ away_prob }}%</td>
+            </tr>
+        </table>
+
+        <h3>Predicted Winner: {{ winner }}</h3>
+
+        <ul>
+            <li>Uses win percentage</li>
+            <li>Uses average points scored</li>
+            <li>Uses average points allowed</li>
+            <li>Gives home team a small advantage</li>
+        </ul>
+    {% endif %}
+</body>
+</html>
