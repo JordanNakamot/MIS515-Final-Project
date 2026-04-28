@@ -66,10 +66,19 @@ def index(request):
 
             if home_score > away_score:
                 winner = home_team
+                winner_avg_points = home["avg_points"]
+                winner_avg_allowed = home["avg_allowed"]
+                winner_home_bonus = f"{home_team} received the home-court bonus of +3 points."
             elif away_score > home_score:
                 winner = away_team
+                winner_avg_points = away["avg_points"]
+                winner_avg_allowed = away["avg_allowed"]
+                winner_home_bonus = f"{away_team} did not receive the home-court bonus."
             else:
                 winner = "Too close to call"
+                winner_avg_points = "N/A"
+                winner_avg_allowed = "N/A"
+                winner_home_bonus = "No team edge was strong enough to clearly separate the matchup."
 
             data.update({
                 "home_team": home_team,
@@ -79,6 +88,17 @@ def index(request):
                 "home_prob": home_prob,
                 "away_prob": away_prob,
                 "winner": winner,
+
+                "home_win_pct": home["win_pct"],
+                "away_win_pct": away["win_pct"],
+                "home_avg_points": home["avg_points"],
+                "away_avg_points": away["avg_points"],
+                "home_avg_allowed": home["avg_allowed"],
+                "away_avg_allowed": away["avg_allowed"],
+
+                "winner_avg_points": winner_avg_points,
+                "winner_avg_allowed": winner_avg_allowed,
+                "winner_home_bonus": winner_home_bonus,
             })
         else:
             data["error"] = "One or both teams were not found in the dataset."

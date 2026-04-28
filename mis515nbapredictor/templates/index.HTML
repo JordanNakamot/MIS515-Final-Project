@@ -59,6 +59,48 @@
         </table>
 
         <h3>Predicted Winner: {{ winner }}</h3>
+
+        <h2>Prediction Summary</h2>
+
+        <p>The model score is calculated using three main variables:</p>
+        <ol>
+            <li>Win Percentage</li>
+            <li>Average Points Scored</li>
+            <li>Average Points Allowed</li>
+        </ol>
+
+        <p>
+            <strong>Formula:</strong><br>
+            Model Score = (Win % × 40) + (Avg Points Scored × 0.3) - (Avg Points Allowed × 0.2) + Home Advantage
+        </p>
+
+        <p><strong>How this works:</strong></p>
+        <ul>
+            <li>Win percentage has the biggest impact, weighted by 40</li>
+            <li>Teams that score more points get a higher score</li>
+            <li>Teams that allow more points get a lower score</li>
+            <li>The home team receives a small bonus of +3 points</li>
+        </ul>
+
+        <p><strong>Team Variables Used:</strong></p>
+        <ul>
+            <li><strong>{{ home_team }}</strong>: Win % = {{ home_win_pct }}, Avg Points = {{ home_avg_points }}, Avg Allowed = {{ home_avg_allowed }}</li>
+            <li><strong>{{ away_team }}</strong>: Win % = {{ away_win_pct }}, Avg Points = {{ away_avg_points }}, Avg Allowed = {{ away_avg_allowed }}</li>
+        </ul>
+
+        <p><strong>Why this team was favored:</strong></p>
+        <ul>
+            <li><strong>{{ winner }}</strong> had the stronger model profile in this matchup</li>
+            <li>{{ winner }} scored {{ winner_avg_points }} points per game on average</li>
+            <li>{{ winner }} allowed {{ winner_avg_allowed }} points per game on average</li>
+            <li>{{ winner_home_bonus }}</li>
+        </ul>
+
+        <p>
+            <strong>Result:</strong><br>
+            The higher model score produced the higher predicted win probability, so the model predicts
+            <strong>{{ winner }}</strong>.
+        </p>
     {% endif %}
 </body>
 </html>
